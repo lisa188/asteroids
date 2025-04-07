@@ -8,6 +8,7 @@ from player import *
 from asteroid import *
 from asteroidfield import *
 from shot import Shot
+from mine import Mine
 
 def main():
     # initialize the pygame module
@@ -21,10 +22,12 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    mines = pygame.sprite.Group()
 
     #moving containers
     Asteroid.containers = (asteroids, updateable, drawable)
     Shot.containers = (shots, updateable, drawable)
+    Mine.containers = (mines, updateable, drawable)
 
     AsteroidField.containers = updateable
     asteroid_field = AsteroidField()
@@ -49,6 +52,10 @@ def main():
                 if asteroid.collides_with(shot):
                     asteroid.split()
                     shot.kill()
+            for mine in mines:
+                if asteroid.collides_with(mine):
+                    asteroid.split()
+                    mine.kill()
 
         screen.fill("black")
 
